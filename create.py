@@ -42,7 +42,11 @@ def main():
         
         
         os.system(f"mkdir -p {path}")
-        os.chdir(os.popen("echo ~").read().split()[0]+path.replace(r"\ ", " ").replace("~", ""))
+        if not args.path:
+            os.chdir(os.popen("echo ~").read().split()[0]+path.replace(r"\ ", " ").replace("~", ""))
+        else:
+            os.chdir(path.replace(r"\ ", " ").replace("~", ""))
+            
         os.system("git init")
         
         if not args.no_readme:
