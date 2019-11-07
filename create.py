@@ -28,8 +28,6 @@ def main():
     repo_name = args.repository
     titled_name = repo_name.replace("-", r"\ ").title()
     
-    orig_path = os.getcwd()
-    
     if not args.init:
         if args.path and args.folder_name:
             path = f"{args.path}{os.path.sep}{args.folder_name}"
@@ -42,10 +40,7 @@ def main():
         
         
         os.system(f"mkdir -p {path}")
-        if not args.path:
-            os.chdir(os.popen("echo ~").read().split()[0]+path.replace(r"\ ", " ").replace("~", ""))
-        else:
-            os.chdir(path.replace(r"\ ", " ").replace("~", ""))
+        os.chdir(path.replace(r"\ ", " ").replace("~", os.popen("echo ~").read().split()[0]))
             
         os.system("git init")
         
