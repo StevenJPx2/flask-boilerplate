@@ -28,21 +28,15 @@ def create(args=None):
     args = parser.parse_args() if args is None else parser.parse_args(args)
     
     repo_name = args.repository
-    titled_name = repo_name.replace("-", " ").title() if not args.folder_name else args.folder_name
+    titled_name = args.folder_name or repo_name.replace("-", " ").title()
+    base_path = args.path or DEFAULT_PATH
     
     if not args.init:
-        if args.path and args.folder_name:
-            path = f"{args.path}{os.path.sep}{args.folder_name}"
-        elif args.path:
-            path = f"{args.path}{os.path.sep}{titled_name}"
-        elif args.folder_name:
-            path = f"{DEFAULT_PATH}{os.path.sep}{args.folder_name}"
-        else:
-            path = f"{DEFAULT_PATH}{os.path.sep}{titled_name}"
+        path = f"{base_path}{os.sep}{titled_name}"
             
-        path = path.replace("~", os.popen("echo ~").read().split()[0])
+        path = os.popen(f"echo '{path}'").read().split()[0]
         
-        os.mkdir(path)
+        os.makedirs(path)
         os.chdir(path)
         
         if not args.no_readme:
