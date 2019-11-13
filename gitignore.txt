@@ -1,3 +1,8 @@
+# General
+.DS_Store
+*.mp4
+*.sketch
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
