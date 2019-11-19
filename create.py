@@ -33,8 +33,13 @@ def create(args=None):
     
     if not args.init:
         path = f"{base_path}{os.sep}{titled_name}"
+        if args.verbose > 1: 
+            print(path)
+            print("echo %s" % path.replace(' ', r'\ '))
             
-        path = os.popen(f"echo '{path}'").read().split()[0]
+        path = os.popen("echo %s" % path.replace(' ', r'\ ')).read().split('\n')[0]
+        
+        if args.verbose >= 1: print(path)
         
         os.makedirs(path)
         os.chdir(path)
